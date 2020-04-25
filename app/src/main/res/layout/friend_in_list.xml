@@ -12,27 +12,27 @@
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Name"/>
+        android:text="@string/name"/>
 
     <TextView
         android:id="@+id/email"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        android:text="Email"/>
+        android:text="@string/email"/>
 
     <TextView
         android:id="@+id/address"
         app:layout_constraintTop_toBottomOf="@+id/email"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:text="Address"/>
+        android:text="@string/address"/>
 
     <Button
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:id="@+id/btn_add_friend"
-        android:text="Add friend"
+        android:text="@string/add_friend"
         app:layout_constraintLeft_toRightOf="@+id/name"
         tools:layout_editor_absoluteY="0dp" />
 
