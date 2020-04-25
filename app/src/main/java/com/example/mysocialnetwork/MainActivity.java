@@ -1,13 +1,14 @@
 package com.example.mysocialnetwork;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     public static FragmentManager fragmentManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -65,26 +67,30 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                     progressDialog.dismiss();
-                        JSONArray jsonArray = new JSONArray(stringRequest);
-                        for(int i=0;i<jsonArray.length();i++)
-                        {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            JSONArray jsonAddress = jsonObject.getJSONArray("address");
-                            String address = "";
-                            for(int j=0;j<jsonAddress.length();j++)
-                            {
-                                JSONObject addressJsonObj = jsonAddress.getJSONObject(j);
-                                address.concat(addressJsonObj,getString());
-                            }
+                       try {
+                           JSONArray jsonArray = new JSONArray(stringRequest);
+                           for (int i = 0; i < jsonArray.length(); i++) {
+                               JSONObject jsonObject = jsonArray.getJSONObject(i);
+                               JSONArray jsonAddress = jsonObject.getJSONArray("address");
+                               String address = "";
+                               for (int j = 0; j < jsonAddress.length(); j++) {
+                                   JSONObject addressJsonObj = jsonAddress.getJSONObject(j);
+                                   address.concat(addressJsonObj.getString());
+                               }
 
-                            Friend_In_List friend_aux = new Friend_In_List(jsonObject.getString("username"), address, jsonObject.getString("email"));
+                               Friend_In_List friend_aux = new Friend_In_List(jsonObject.getString("username"), address, jsonObject.getString("email"));
 
-                            if(friends.contains(friend_aux) == FALSE)
-                            {
-                                new_possible_friends.add(friend_aux);
-                            }
-                        }
-                    }
+                               if (friends.contains(friend_aux) == FALSE) {
+                                   new_possible_friends.add(friend_aux);
+                               }
+                           }
+                           adapter = new MyAdapter(new_possible_friends, getApplicationContext());
+                           recyclerView.setAdapter(adapter);
+                       }catch (JSONException e)
+                       {
+                           e.printStackTrace();
+                       }
+                       }
                 },
                 new Response.ErrorListener() {
                     @Override
