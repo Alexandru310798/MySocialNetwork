@@ -17,17 +17,26 @@
     <Button
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_show_my_friends"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="200dp"
-        android:text="@string/delete" />
+        android:text="@string/show_my_friends" />
     <Button
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_view"
+        android:id="@+id/btn_maps"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="300dp"
-        android:text="@string/view" />
+        android:text="@string/where_am_i" />
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_me"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="400dp"
+        android:text="@string/my_infos" />
 </FrameLayout>

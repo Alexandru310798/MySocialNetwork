@@ -41,7 +41,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                                                  @Override
                                                  public void onClick(View view)
                                                  {
-                                                     Toast.makeText(context,"You are friend with "+ friend.getName(),Toast.LENGTH_LONG ).show();
+                                                     Add.addFriend(friend);
+                                                     Toast.makeText(context,"Now, you are friend with "+ friend.getName(),Toast.LENGTH_LONG ).show();
                                                  }
                                              }
         );

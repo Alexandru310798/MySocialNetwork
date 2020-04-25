@@ -6,7 +6,7 @@
     tools:context=".Add">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view_to_find_friends"
+        android:id="@+id/my_recycler_view_to_show_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
