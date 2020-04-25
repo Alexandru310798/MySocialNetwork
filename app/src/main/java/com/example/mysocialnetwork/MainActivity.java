@@ -1,14 +1,14 @@
 package com.example.mysocialnetwork;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,12 +25,55 @@ import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Friend_In_List> new_possible_friends, friends;
     private String url = "https://jsonplaceholder.typicode.com/users";
+
+    private void loadRecyclerViewData()
+    {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                    progressDialog.dismiss();
+                        try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for(int i=0;i<jsonArray.length();i++)
+                        {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String address = "";
+                            Friend_In_List friend_aux = new Friend_In_List(jsonObject.getString("username"), address, jsonObject.getString("email"));
+
+                            if(friends.contains(friend_aux) == FALSE)
+                            {
+                                new_possible_friends.add(friend_aux);
+                            }
+                        }
+                        adapter = new MyAdapter(new_possible_friends,getApplicationContext());
+                        recyclerView.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
 
     @Override
@@ -39,12 +82,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         recyclerView = findViewById(R.id.my_recycler_view_to_show_friends);
-        recyclerView.setLayoutManager(new LinearLayoutManager());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         new_possible_friends = new ArrayList<>();
         friends = new ArrayList<>();
-
-        adapter = new MyAdapter(new_possible_friends,this);
-        recyclerView.setAdapter(adapter);
         loadRecyclerViewData();
         if(findViewById(R.id.fragment_container)!=null)
         {
@@ -56,50 +96,5 @@ public class MainActivity extends Activity {
 
         }
     }
-
-    private void loadRecyclerViewData()
-    {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                    progressDialog.dismiss();
-                       try {
-                           JSONArray jsonArray = new JSONArray(stringRequest);
-                           for (int i = 0; i < jsonArray.length(); i++) {
-                               JSONObject jsonObject = jsonArray.getJSONObject(i);
-                               JSONArray jsonAddress = jsonObject.getJSONArray("address");
-                               String address = "";
-                               for (int j = 0; j < jsonAddress.length(); j++) {
-                                   JSONObject addressJsonObj = jsonAddress.getJSONObject(j);
-                                   address.concat(addressJsonObj.getString());
-                               }
-
-                               Friend_In_List friend_aux = new Friend_In_List(jsonObject.getString("username"), address, jsonObject.getString("email"));
-
-                               if (friends.contains(friend_aux) == FALSE) {
-                                   new_possible_friends.add(friend_aux);
-                               }
-                           }
-                           adapter = new MyAdapter(new_possible_friends, getApplicationContext());
-                           recyclerView.setAdapter(adapter);
-                       }catch (JSONException e)
-                       {
-                           e.printStackTrace();
-                       }
-                       }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
 }
+

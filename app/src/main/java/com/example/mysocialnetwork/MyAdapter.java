@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +32,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public  void onBindViewHolder(ViewHolder viewHolder, int position)
     {
-        Friend_In_List friend = list_friends.get(position);
+        final Friend_In_List friend = list_friends.get(position);
         viewHolder.address.setText(friend.getAddress());
         viewHolder.name.setText(friend.getName());
-        viewHolder.age.setText(friend.getAge());
         viewHolder.email.setText(friend.getEmail());
+        viewHolder.button.setOnClickListener(new View.OnClickListener()
+                                             {
+                                                 @Override
+                                                 public void onClick(View view)
+                                                 {
+                                                     Toast.makeText(context,"You are friend with "+ friend.getName(),Toast.LENGTH_LONG ).show();
+                                                 }
+                                             }
+        );
     }
     @Override
     public int getItemCount()
@@ -43,16 +53,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
-        public TextView age, email, name, address;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView  email, name, address;
+        public Button button;
 
         public ViewHolder( View itemView) {
             super(itemView);
-            age = itemView.findViewById(R.id.age);
             email = itemView.findViewById(R.id.email);
             name = itemView.findViewById(R.id.name);
             address = itemView.findViewById(R.id.address);
+            button = itemView.findViewById(R.id.btn_add_friend);
         }
     }
 }

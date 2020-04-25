@@ -9,7 +9,7 @@
     <Button
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_search"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="100dp"
