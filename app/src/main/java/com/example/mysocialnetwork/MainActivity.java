@@ -29,14 +29,17 @@ import static java.lang.Boolean.FALSE;
 public class MainActivity extends AppCompatActivity {
     public static MyAppDatabase myAppDatabase;
     public static FragmentManager fragmentManager;
-    public static RecyclerView recyclerViewToFindFriends;
-    private static RecyclerView.Adapter adapter;
-    public static RecyclerView recyclerViewToShowFriends;
-    public static MyAdapterToShowMyFriends adapterToShowMyFriends;
-    private static List<Friend_In_List> new_possible_friends;
-    private static List<Friend_In_List> friends;
+    public  RecyclerView recyclerViewToFindFriends;
+    private  RecyclerView.Adapter adapter;
+    public   RecyclerView recyclerViewToShowFriends;
+    public  MyAdapterToShowMyFriends adapterToShowMyFriends;
+    private  List<Friend_In_List> new_possible_friends;
+    private  List<Friend_In_List> friends;
     private String url = "https://jsonplaceholder.typicode.com/users";
 
+    {
+        recyclerViewToFindFriends = findViewById(R.id.my_recycler_view_to_find_friends);
+    }
     public void loadRecyclerViewToFindFriendsData()
     {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -98,13 +101,14 @@ public class MainActivity extends AppCompatActivity {
     recyclerViewToShowFriends.setAdapter(adapter);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
-        recyclerViewToFindFriends = findViewById(R.id.my_recycler_view_to_find_friends);
-        recyclerViewToFindFriends.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewToFindFriends.setHasFixedSize(true);
+        recyclerViewToFindFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         new_possible_friends = new ArrayList<>();
         friends = new ArrayList<>();
         loadRecyclerViewToFindFriendsData();

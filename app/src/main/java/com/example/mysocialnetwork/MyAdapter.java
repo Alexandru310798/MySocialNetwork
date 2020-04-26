@@ -26,8 +26,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_in_list, parent,false);
-        return new ViewHolder(view);
+        ViewHolder v = new ViewHolder(view);
+        return v;
     }
+
 
     @Override
     public  void onBindViewHolder(ViewHolder viewHolder, int position)
