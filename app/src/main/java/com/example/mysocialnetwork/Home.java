@@ -30,7 +30,7 @@ public class Home extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        add_button = view.findViewById(R.id.btn_add_friend);
+        add_button = view.findViewById(R.id.btn_search);
         add_button.setOnClickListener(this);
         show_button = view.findViewById(R.id.btn_show_my_friends);
         show_button.setOnClickListener(this);

@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private  List<Friend_In_List> friends;
     private String url = "https://jsonplaceholder.typicode.com/users";
 
-    {
-        recyclerViewToFindFriends = findViewById(R.id.my_recycler_view_to_find_friends);
-    }
+
     public void loadRecyclerViewToFindFriendsData()
     {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -105,14 +103,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_add);
+        recyclerViewToFindFriends = findViewById(R.id.my_recycler_view_to_find_friends);
         fragmentManager = getSupportFragmentManager();
         recyclerViewToFindFriends.setHasFixedSize(true);
         recyclerViewToFindFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         new_possible_friends = new ArrayList<>();
         friends = new ArrayList<>();
         loadRecyclerViewToFindFriendsData();
-
+        setContentView(R.layout.activity_main);
         myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"user").allowMainThreadQueries().build();
         if(findViewById(R.id.fragment_container)!=null)
         {

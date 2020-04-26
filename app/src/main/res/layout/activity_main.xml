@@ -12,5 +12,9 @@
         android:layout_height="520dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="74dp"></FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_recycler_view_activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
