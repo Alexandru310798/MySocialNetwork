@@ -1,14 +1,14 @@
 package com.example.mysocialnetwork;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -56,7 +56,11 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.btn_show_my_friends:
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container,new Show_Friends()).addToBackStack(null).commit();
                 break;
-
+            case R.id.btn_maps:
+                startActivity(new Intent(getActivity(),MapsActivity.class));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + view.getId());
         }
     }
 }
